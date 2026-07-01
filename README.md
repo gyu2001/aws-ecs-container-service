@@ -1,56 +1,43 @@
 # AWS ECS 기반 컨테이너 서비스 구축
 
-가상 서버(EC2) 관리 부담을 최소화하고 애플리케이션의 고가용성을 확보하기 위한 Fargate 기반 서버리스 컨테이너 배포 환경 구축
+개인 실습으로 Fargate 기반 컨테이너 배포 환경을 먼저 구축했고, 이후 2인 팀 프로젝트에서는 Dockerfile 작성부터 ECR 이미지 관리, ECS 태스크 정의, 컨테이너 전용 보안그룹 구성, ALB 타겟 그룹 연동까지 구현 전 과정을 직접 담당했습니다. 팀원은 결과 검증과 발표 자료 정리를 맡았습니다.
 
 ---
 
-## 🏗 Architecture
+## Architecture
 
-[ Route53 ]
-                         │
-                    [   ALB   ]
-                         │
-                [ ECS Service ]
-                (AWS Fargate)
-                /            \
-        [ Task ]          [ Task ]
-      (Container)       (Container)
-                \            /
-                [ Amazon ECR ]
-              (Image Repository)
+Route53 → ALB → ECS Service(Fargate) → Task(Container) → Amazon ECR(이미지 저장소) 구조로, EC2 관리 부담 없이 컨테이너를 서버리스로 배포하고 ALB로 트래픽을 분산합니다.
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
-`AWS Console` `Docker` `Amazon ECR` `Amazon ECS` `AWS Fargate` `ALB` `Route53`
+`Docker` `Amazon ECR` `Amazon ECS(Fargate)` `ALB` `Route 53`
 
 ---
 
-## 📌 주요 구현 내용
+## 구현 내용
 
-### 1. 컨테이너 빌드 및 이미지 관리
 - 애플리케이션 컨테이너화를 위한 Dockerfile 작성 및 빌드
-- Amazon ECR 리포지토리 생성 후 빌드된 이미지 푸시 및 버전 관리
-
-### 2. ECS 태스크 정의 및 보안 규칙 수립
+- Amazon ECR 리포지토리 생성 후 이미지 푸시 및 버전 관리
 - AWS Fargate 시작 유형의 ECS 태스크 정의 작성
-- 컨테이너 전용 보안그룹 생성 및 포트 80 트래픽만 허용하도록 인바운드 규칙 제한
-
-### 3. 고가용성 구성
+- 컨테이너 전용 보안그룹 생성, 포트 80 트래픽만 허용하도록 인바운드 규칙 제한
 - ALB 타겟 그룹 연동으로 컨테이너 레벨 로드 밸런싱 구축
-- 오토스케일링 설정으로 트래픽 변동에 따른 컨테이너 수 자동 조정
+- ALB 타겟 그룹이 Healthy 상태로 정상 등록된 것까지 확인
 
 ---
 
-## 👤 담당 역할
+## 검증 결과
 
-| 구분 | 내용 |
-|---|---|
-| 팀 프로젝트 | Dockerfile 작성 및 ECR 이미지 관리, ECS 태스크 정의 및 보안그룹 규칙 수립 담당 |
-| 독립 재구현 | 프로젝트 완료 후 동일한 컨테이너 배포 프로세스를 혼자 처음부터 재구현하며 ECR 자격증명 설정 및 ECS 서비스-ALB 타겟 그룹 연동 전 과정 직접 확인 |
+*(내일 스크린샷 추가 예정)*
+
+- [ ] ECR에 이미지 push 완료 화면
+- [ ] ECS 서비스/태스크 Running 상태
+- [ ] ALB 타겟 그룹 Healthy 상태
+- [ ] 보안그룹 인바운드 규칙 화면
 
 ---
 
-## 📄 발표 자료
-[프로젝트 발표 자료 보기](./aws-ecs-container-service.pdf)
+## 발표 자료
+
+[프로젝트 발표 자료 보기](https://github.com/gyu2001/aws-ecs-container-service/blob/main/aws-ecs-container-service.pdf)
