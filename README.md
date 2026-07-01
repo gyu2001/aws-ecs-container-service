@@ -53,4 +53,4 @@
 ---
 
 ## 📄 발표 자료
-[프로젝트 발표 자료 보기](./docs/aws ecs 기반 컨테이너 구축.pdf)
+[프로젝트 발표 자료 보기](./aws-ecs-container-service.pdf)
