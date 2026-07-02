@@ -6,7 +6,7 @@
 
 ## Architecture
 
-Route53 → ALB → ECS Service(Fargate) → Task(Container) → Amazon ECR(이미지 저장소) 구조로, EC2 관리 부담 없이 컨테이너를 서버리스로 배포하고 ALB로 트래픽을 분산합니다.
+![Architecture](/architecture.svg)
 
 ---
 
