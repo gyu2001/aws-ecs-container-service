@@ -12,7 +12,7 @@
 
 ## Tech Stack
 
-`Docker` `Amazon ECR` `Amazon ECS(Fargate)` `ALB` `Route 53`
+`Docker` `Amazon ECR` `Amazon ECS(Fargate)` `ALB`
 
 ---
 
