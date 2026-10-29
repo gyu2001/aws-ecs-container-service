@@ -19,7 +19,7 @@
 ## 구현 내용
 
 - 애플리케이션 컨테이너화를 위한 [Dockerfile](./Dockerfile) 작성 및 빌드
-- Amazon ECR 리포지토리 생성 후 이미지 푸시 및 버전 관리
+- Amazon ECR 리포지토리 생성 후 이미지 빌드·푸시
 - AWS Fargate 시작 유형의 [ECS 태스크 정의](./task-definition.json) 작성
 - 컨테이너 전용 보안그룹 생성, 포트 80 트래픽만 허용하도록 인바운드 규칙 제한
 - ALB 타겟 그룹 연동으로 컨테이너 레벨 로드 밸런싱 구축
@@ -42,6 +42,11 @@
 ![ALB target healthy](screenshots/05-alb-target-healthy.png)
 
 ---
+
+## 개선할 점
+
+- 태스크 정의가 `latest` 태그를 사용해, 어떤 이미지가 배포됐는지 추적과 롤백이 어려웠습니다.
+- 이 경험을 바탕으로 이후 [GitOps 프로젝트](https://github.com/gyu2001/gitops-sample-app)에서는 이미지 태그를 커밋 SHA로 바꿔 추적이 가능하게 했습니다.
 
 ## 발표 자료
 
